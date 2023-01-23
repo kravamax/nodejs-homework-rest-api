@@ -1,7 +1,7 @@
-const contactsAPI = require('../../models/contacts');
+const { Contact } = require('../../models/contact');
 
 const listContacts = async (_, res) => {
-  const contacts = await contactsAPI.listContacts();
+  const contacts = await Contact.find({}, 'name email phone');
   res.json(contacts);
 };
 
