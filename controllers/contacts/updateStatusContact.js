@@ -1,16 +1,13 @@
-const { Contact, schemas } = require('../../models/contact');
+const { Contact } = require('../../models/contact');
+
+const { RequestError } = require('../../helpers');
 
 const updateStatusContact = async (req, res) => {
   const { id } = req.params;
-  const { error } = schemas.updateFavoriteSchema.validate(req.body);
-
-  if (error) {
-    return res.status(400).json({ message: 'missing field favorite' });
-  }
-
   const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+
   if (!result) {
-    res.status(404).json({ message: 'Not found' });
+    throw RequestError(404, 'Not found');
   }
 
   res.json(result);
