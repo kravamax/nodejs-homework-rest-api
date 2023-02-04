@@ -12,7 +12,7 @@ const router = express.Router();
 
 // signup
 router.post(
-  '/register',
+  '/signup',
   validateBody(schemas.registerSchema),
   ctrlWrapper(ctrl.register)
 );
@@ -27,5 +27,12 @@ router.post(
 router.get('/current', authenticate, ctrlWrapper(ctrl.getCurrent));
 
 router.get('/logout', authenticate, ctrlWrapper(ctrl.logout));
+
+router.patch(
+  '/',
+  authenticate,
+  validateBody(schemas.updateSubscriptionSchema),
+  ctrlWrapper(ctrl.updateSubscription)
+);
 
 module.exports = router;

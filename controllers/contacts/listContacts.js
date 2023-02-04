@@ -7,17 +7,17 @@ const listContacts = async (req, res) => {
 
   const contacts = await Contact.find(
     { owner, ...query },
-    'name email phone owner',
+    'name email phone favorite owner',
     {
       skip,
       limit,
     }
   ).populate('owner', 'name email');
-  // if (contacts.length === 0) {
-  //   return res.json({
-  //     message: 'not find',
-  //   });
-  // }
+  if (contacts.length === 0) {
+    return res.json({
+      message: 'not find',
+    });
+  }
   res.json(contacts);
 };
 

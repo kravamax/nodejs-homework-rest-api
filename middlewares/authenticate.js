@@ -22,7 +22,10 @@ const authenticate = async (req, res, next) => {
       req.user = user;
       next();
     } catch (error) {
-      throw RequestError(401, error.message);
+      // throw RequestError(401, error.message);
+      throw res.status(401).json({
+        message: error.message,
+      });
     }
   } catch (error) {
     next(error);
