@@ -2,13 +2,16 @@ const bcrypt = require('bcryptjs');
 
 const { User } = require('../../models/user');
 
-const { RequestError } = require('../../helpers');
+// const { RequestError } = require('../../helpers');
 
 const register = async (req, res) => {
   const { email, password, subscription } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    throw RequestError(409, 'Email in use');
+    // RequestError(409, 'Email in use');
+    return res.status(409).json({
+      message: 'Email in use',
+    });
   }
   const hashPassword = await bcrypt.hash(password, 10);
   const result = await User.create({
